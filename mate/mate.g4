@@ -5,17 +5,19 @@
  */
  
 program
-    : codeblock
-    | codeblock codeblock 
+    : codeblock+
 ;
 
 codeblock
     : Preprocess #CodeblockPreprocess
     | Strings #CodeblockStrings
     | MateKeyWord #CodeblockMateKeyWord
-    /*| .* #CodeblockNopattern*/
+    | nopattern #CodeblockNoPattern
 ;
 
+nopattern
+    : AnyWord
+;
 
 /*
  * Lexer Rules
@@ -93,6 +95,10 @@ fragment Hexquad
 
 MateKeyWord
     : 'mate'
+;
+
+AnyWord
+    : WS .*? WS
 ;
 
 WS : [ \t\r\n]+ -> skip ;
