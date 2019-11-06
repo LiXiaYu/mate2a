@@ -12,8 +12,14 @@ namespace mate_test
             string input = @"#include <stdio.h>
 #define MDPEKLF\
 KKKKK 33
+mate AAA
+{
+        string aa=""888jjjj"";
+};
 
 int main(){
+
+auto a=""ddd"";
 return
 0;
 }";

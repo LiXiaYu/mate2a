@@ -9,9 +9,14 @@ namespace mate
     {
         Dictionary<string, object> memory = new Dictionary<string, object>();
 
-        public override object VisitExpression([NotNull] mateParser.ExpressionContext context)
+        public override object VisitCodeblockMateKeyWord([NotNull] mateParser.CodeblockMateKeyWordContext context)
         {
-            return base.VisitExpression(context);
+            return base.VisitCodeblockMateKeyWord(context);
+        }
+
+        public override object VisitCodeblockPreprocess([NotNull] mateParser.CodeblockPreprocessContext context)
+        {
+            return base.VisitCodeblockPreprocess(context);
         }
     }
 }
