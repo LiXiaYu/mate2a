@@ -10,14 +10,15 @@ program
 
 codeblock
     : Preprocess #CodeblockPreprocess
+    | Comment #CodeblockComment
     | Strings #CodeblockStrings
     | MateKeyWord #CodeblockMateKeyWord
-    | nopattern #CodeblockNoPattern
+    //| nopattern #CodeblockNoPattern
 ;
 
-nopattern
-    : AnyWord
-;
+//nopattern
+//    : AnyWord
+//;
 
 /*
  * Lexer Rules
@@ -29,76 +30,22 @@ Preprocess
 ;
 
 Strings
-    : Encodingprefix? '"' Schar* '"'
-    | Encodingprefix? 'R' Rawstring
+    : '"' ('""'|~'"')* '"'
 ;
-
-fragment Encodingprefix
-    : 'u8'
-    | 'u'
-    | 'U'
-    | 'L'
-;
-
-fragment Schar
-    : ~ ["\\\r\n]
-    | Escapesequence
-    | Universalcharactername
-;
-fragment Rawstring
-    : '"' .*? '(' .*? ')' .*? '"'
-;
-
-fragment Escapesequence
-    : Simpleescapesequence
-    | Octalescapesequence
-    | Hexadecimalescapesequence
-;
-
-fragment Simpleescapesequence
-    : '\\\''
-    | '\\"'
-    | '\\?'
-    | '\\\\'
-    | '\\a'
-    | '\\b'
-    | '\\f'
-    | '\\n'
-    | '\\r'
-    | '\\t'
-    | '\\v'
-;
-
-fragment Octalescapesequence
-    : '\\' OCTALDIGIT
-    | '\\' OCTALDIGIT OCTALDIGIT
-    | '\\' OCTALDIGIT OCTALDIGIT OCTALDIGIT
-;
-
-fragment Hexadecimalescapesequence
-    : '\\x' HEXADECIMALDIGIT+
-;
-fragment Universalcharactername
-    : '\\u' Hexquad
-    | '\\U' Hexquad Hexquad
-;
-fragment OCTALDIGIT
-    : [0-7]
-;
-fragment HEXADECIMALDIGIT
-    : [0-9a-fA-F]
-;
-fragment Hexquad
-    : HEXADECIMALDIGIT HEXADECIMALDIGIT HEXADECIMALDIGIT HEXADECIMALDIGIT
-;
-
 
 MateKeyWord
     : 'mate'
 ;
 
-AnyWord
-    : WS .*? WS
+//AnyWord
+//    : [ \t\r\n]+ .*? [ \t\r\n]+
+//;
+
+WS
+    : [ \t\r\n]+ ->skip
 ;
 
-WS : [ \t\r\n]+ -> skip ;
+Comment
+    : '//' .*? '\n' 
+    | '/*' .*? '*/'
+;

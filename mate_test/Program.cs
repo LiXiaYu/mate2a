@@ -8,10 +8,12 @@ namespace mate_test
     {
         static void Main(string[] args)
         {
-            //
+
             string input = @"#include <stdio.h>
 #define MDPEKLF\
 KKKKK 33
+//shmmm
+/*ddd mate */
 mate AAA
 {
         string aa=""888jjjj"";
@@ -30,11 +32,13 @@ return
             var parser = new mateParser(tokens);
             var tree = parser.program();
 
-            var visitor = new mateVisitor();
+            var visitor = new MateVisitor(input);
             var result = visitor.Visit(tree);
 
             Console.WriteLine(tree.ToStringTree(parser));
             Console.WriteLine(result);
+            Console.WriteLine();
+            Console.WriteLine(visitor.ResultText);
             Console.ReadKey();
         }
     }
